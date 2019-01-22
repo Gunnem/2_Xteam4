@@ -24,18 +24,46 @@ $("#submitNamebtn").on("click", function(event) {
         $("#image"+i).css("background-image", "url("+response[i].image+")");
 
         $("#recipe"+i+" .saveRecipebtn").attr("data-recipeID",response[i].id);
-        $("#recipe"+i+" .seeRecipe").attr("data-recipeID",response[i].id);
-
-        // give button an attr that is the Id number for spoonacular.
+        $("#recipe"+i+" .btn-link").attr("data-sourceUrl",response[i].sourceUrl);
       }
-
     });
-    // This line grabs the input from the textbox
-
-
-
-
 });
+// end of ingredient call
+
+var sourceUrl;
+
+$(".btn-link").on("click", function(event) {
+    
+    // event.preventDefault();
+    
+    sourceUrl = $(this).attr("data-sourceUrl") ;
+    console.log(sourceUrl);
+
+    // recipeID = $("#saveRecipebtn" + i);
+
+    var queryURL = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/' + sourceUrl + '/information'
+
+      console.log(queryURL);
+    $.ajax({
+      url:queryURL,
+      type:"GET",
+      crossDomain: true,
+      headers:{
+        "X-RapidAPI-Key": "iO1JP0bW8vmshiir9bxd1hPu4sv4p1KhdBHjsnWR4JOwXs3gBt",
+      }
+    }).then(function(response){
+      console.log(response);
+      
+      // console.log(response[0].title);
+
+    });    
+});
+
+
+
+
+
+// end of sourceUrl call
 
 var recipeID;
 
